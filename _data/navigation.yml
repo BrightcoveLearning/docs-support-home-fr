@@ -1,0 +1,45 @@
+- section:
+  name: Accueil
+  url: /index.html
+- section:
+  name: Vidéo Cloud Studio
+  url: 'https://studio.support.brightcove.com/index.html'
+- section:
+  name: Lecteur Brightcove
+  url: 'https://player.support.brightcove.com/index.html'
+- section:
+  name: API Video Cloud Platform
+  url: 'https://apis.support.brightcove.com/index.html'
+- section:
+  name: SDK pour périphériques Video Cloud
+  url: 'https://apis.support.brightcove.com/index.html'
+- section:
+  name: Entraînement
+  url: /training/index.html
+  docs:
+    - name: Tous les cours de formation en ligne
+      url: /training/online-training-courses.html
+    - name: S'inscrire à la formation dirigée par un instructeur
+      url: /training/register-training.html
+    - name: 'Entraînement : Présentation de Video Cloud'
+      url: /training/training-demand-introduction-video-cloud.html
+    - name: 'Formation : Présentation de Video Cloud Analytics'
+      url: /training/training-demand-introduction-video-cloud-analytics.html
+    - name: 'Formation : Principes de base du cloud vidéo'
+      url: /training/training-demand-video-cloud-basics.html
+    - name: Vidéos de formation Video Cloud Studio
+      url: /training/video-cloud-studio-training-videos.html
+    - name: Cours de formation à l'Université de Brightcove
+      url: /training/brightcove-university.html
+- section:
+  name: 'Assistance'
+  url: '/support/index.html'
+  docs:
+    - name: 'Affichage de la page d'état du système Brightcove'
+      url: '/support/viewing-brightcove-system-status-page.html'
+    - name: 'Contactez le service commercial'
+      url: '/support/contact-sales.html'
+    - name: 'Ouverture d'un dossier de support'
+      url: '/support/opening-case-with-brightcove-support.html'
+    - name: 'Réinitialiser le mot de passe du portail'
+      url: '/support/reset-support-portal-password.html'

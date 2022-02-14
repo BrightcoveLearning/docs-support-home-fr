@@ -1,0 +1,74 @@
+---
+title: Transcodeur d'images
+---
+
+<div class="BCL_objectives"><p>Utilisation du service de transcodage d'images App Cloud, qui peut grandement améliorer les performances de votre application en optimisant les images pour la diffusion mobile.</p>
+  <!--break--></div>
+  <p>App Cloud fournit un service que vous pouvez utiliser pour transcoder des images pour vos applications. En utilisant le service de transcodage d'images, vous pouvez prendre votre image source et la convertir dans la taille et le format dont vous avez besoin pour vos applications. Par exemple, si vous avez une image originale de 300 x 300 pixels, mais que votre application doit l'afficher en 100 x 100. Vous pouvez utiliser le service de transcodage d'image pour vous assurer que l'image est toujours à la bonne taille pour son contexte, sans avoir à créer un nouveau fichier image pour chaque contexte dans lequel vous utilisez l'image. Vous pouvez également recadrer l'image et spécifier la qualité (taux de compression) des images JPG. En utilisant le service de transcodage d'images, vous pouvez :</p>
+  <ul>
+      <li>Améliorez considérablement les performances de votre application en réduisant considérablement la taille du fichier et la bande passante réseau requise pour afficher votre application</li>
+      <li>Réduisez les besoins en mémoire en réduisant la taille des images.</li>
+      <li>Assurez-vous que vos images sont de la bonne taille pour être affichées sur les appareils mobiles.</li>
+      <li>Tirez parti du cache du serveur App Cloud, améliorant les performances des applications et réduisant la charge sur vos propres serveurs.</li>
+  </ul>
+  <p>Le service de transcodage d'images App Cloud agit comme un proxy entre vos images et vos applications. Le service est accessible avec une simple URL dans laquelle vous préfixez l'URL de votre image avec l'URL de notre service de transcodage. Cela vous permet de déposer notre service de transcodage dans vos applications avec très peu d'effort. Par exemple, si vous avez une image qui vit à <code>http://mon.exemple.com/image.png</code> vous le demanderiez normalement comme :</p>
+  <pre>
+  &lt;img &nbsp;src="http://my.example.com/image.png" &nbsp;alt="Image affamée de bande passante" width="500" height="500" /&gt; </pre>
+  <p>Pour le transcoder en une image plus petite de 100x100px, il vous suffit d'émettre la requête suivante :</p>
+  <pre>
+  &lt;img &nbsp;src="http://transcode.appcloud.brightcove.com?image=http://my.example.com/image.png&amp;width=100&amp;height=100" &nbsp;alt="Mon image svelte" width="100" height="100" /&gt;</pre>
+  <p>Pour réduire une image à 100px de largeur, en préservant le rapport hauteur/largeur d'origine :</p>
+  <pre>
+  &lt;img &nbsp;src="http://transcode.appcloud.brightcove.com?image=http://my.example.com/image.png&amp;width=100" width="100" /&gt;</pre>
+  <p>Pour réduire une image à 100 px de largeur ou 100 px de hauteur, selon la valeur la plus élevée, en préservant le rapport hauteur/largeur d'origine :</p>
+  <pre>
+  &lt;img &nbsp;src="http://transcode.appcloud.brightcove.com?image=http://my.example.com/image.png&amp;max_dimension=100" /&gt;</pre>
+  <p>Pour recadrer l'image, en conservant une pièce de 100x100px au centre, il vous suffit d'émettre la requête suivante :</p>
+  <pre>
+  &lt;img &nbsp;src="http://transcode.appcloud.brightcove.com?image=http://my.example.com/image.png&amp;crop=200,200,100,100" &nbsp;alt="Mon image svelte" width="100" height="100" /&gt;</pre>
+  
+  <p>Pour utiliser le service de transcodage d'images, votre image doit être accessible à une URL accessible au public. L'image doit être au format PNG, JPEG ou GIF.</p>
+  <h2><a name="params"></a>Paramètres de requête</h2>
+  <p>L'appel de service de transcodage d'image utilise les paramètres de requête suivants :</p>
+  <h3>image (obligatoire)</h3>
+  <p>L'URL accessible au public à laquelle votre image originale peut être trouvée. Par exemple, <code>image=http://my.example.com/image.png</code>.</p>
+  <h3>format (facultatif)</h3>
+  <p>Le format de la nouvelle image, qui peut être l'un des <code>png</code> , <code>jpg</code> , ou <code>gif</code>. Si vous ne spécifiez pas le format, le format de sortie est inchangé par rapport à l'image d'origine.</p>
+  <h3>Paramètres de taille (facultatif)</h3>
+  <p>Vous pouvez utiliser l'un des paramètres de taille, <code>largeur</code> , <code>la taille</code> , ou <code>dimension_max</code> , si vous souhaitez que la nouvelle image soit d'une taille différente de l'image d'origine. Ces paramètres spécifient une dimension de l'image finale en pixels.</p>
+  <ul>
+      <li>Si vous ne spécifiez aucun paramètre de taille, la nouvelle image aura la même largeur et la même hauteur que l'image d'origine.</li>
+      <li>Si vous spécifiez <code>largeur</code> , mais non <code>la taille</code> , la nouvelle image aura la largeur que vous spécifiez et la hauteur dictée par le rapport hauteur/largeur de l'image d'origine.</li>
+      <li>Si vous spécifiez <code>la taille</code> , mais non <code>largeur</code> , la nouvelle image aura la hauteur que vous spécifiez et la largeur dictée par le rapport hauteur/largeur de l'image d'origine.</li>
+      <li>Si vous spécifiez <code>dimension_max</code> , alors la plus grande dimension de la nouvelle image sera la taille que vous spécifiez, et la plus petite dimension aura la taille dictée par le rapport hauteur/largeur de l'image d'origine.</li>
+  </ul>
+  <p>Dans tous les cas, la nouvelle image aura le même rapport hauteur/largeur que l'image d'origine, sauf si vous spécifiez à la fois un <code>largeur</code> et <code>la taille</code> et ce rapport hauteur/largeur est différent du rapport hauteur/largeur d'origine.</p>
+  <h3>Paramètre de recadrage (facultatif)</h3>
+  <h2>Utilisation d'une fonction utilitaire de transcodage</h2>
+  <p>Pour recadrer votre image, ajoutez le paramètre :</p>
+  <pre>recadrer=x,y,w,h</pre>
+  <p>Ici, x et y sont les coordonnées du point de départ, mesurées en pixels à partir du coin supérieur gauche (0,0). w et h sont des pixels horizontaux et verticaux à préserver, en commençant au point de départ et en continuant vers la droite et le bas.</p>
+  <p>Si le recadrage et le dimensionnement sont tous deux spécifiés, le recadrage est appliqué en premier, puis l'image recadrée est redimensionnée.</p>
+  <h3>Paramètre de qualité (facultatif)</h3>
+  <p>Pour les images JPG uniquement, spécifiez le taux de compression de l'image résultante en ajoutant le paramètre :</p>
+  <pre>qualité=x</pre>
+  <p>x est le taux de compression à appliquer ; la valeur par défaut est 70.</p>
+  <p>Voici une fonction JavaScript pratique pour générer une URL de transcodage d'image :</p>
+  <pre>
+  fonction getTranscodeURL(url, options) { var src = "http://transcode.appcloud.brightcove.com?image=" + url; if (options) { if (options.max_dimension) { src += "&amp;max_dimension=" + options.max; } autre { if (options.width) { src += "&amp;width=" + options.width; } si (options.hauteur) { src += "&amp;height=" + options.height; } } si (options.format) { src += "&amp;format=" + options.format; } si (options.crop) { src += "&amp;crop=" + options.crop; } si (options.qualité) { src += "&amp;quality" + options.quality; } } renvoie src; } ;</pre>
+  <p>Par exemple, pour transcoder une image en 200 pixels de large :</p>
+  <pre>
+  var tx_url = getTranscodeURL("http://www.example.com/example.jpg", { width: 200 });</pre>
+  <p>Pour recadrer une image à 160 x 90, en commençant à 100 pixels à partir de la gauche et à 70 pixels en partant du haut, et en spécifiant un taux de compression de 65 :</p>
+  <pre>var tx_url = getTranscodeURL("http://www.example.com/example.jpg", { crop: "100,70,160,90" , quality: 65 });</pre>
+  <h2>Exemples d'images transcodées</h2>
+  <p>Pour voir à quel point le service de transcodage peut réduire la bande passante et la mémoire requises par les fichiers images, jetez un œil à ces exemples.</p>
+  <p>Tout d'abord, nous avons une image de stock JPEG de haute qualité :<br />
+  <img alt="" src="http://img.brightcove.com/ac-transcode-before.jpg" /></p>
+  <p>Cette image mesure 425x282, avec une taille de fichier de 130 879 octets.</p>
+  <p>En le passant par le service de transcodage avec width=250 :<br />
+  <img alt="" src="http://img.brightcove.com/ac-transcode-after.jpg" /></p>
+  <p>L'image fait désormais 250x165, avec une taille de fichier de 34 017 octets, soit une réduction de 74%.</p>
+  <p>Enfin, nous pouvons le transcoder en taille de vignette (largeur=75) :<br />
+  <img alt="" src="http://img.brightcove.com/ac-transcode-thumb.jpg" /></p>
+  <p>L'image fait désormais 75x49, avec une taille de fichier de 7 686 octets, soit une réduction de 94 % !</p>
